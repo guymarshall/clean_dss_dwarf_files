@@ -41,24 +41,24 @@ fn main() -> io::Result<()> {
 
     const DIRECTORIES: [&str; 1] = ["Thumbnail"];
 
-    for pattern in &FILES {
+    FILES.iter().for_each(|pattern: &&str| {
         let recursive_pattern: String = format!("**/{}", pattern);
 
-        for entry in glob(&recursive_pattern).expect("Failed to read glob pattern") {
-            match entry {
+        glob(&recursive_pattern)
+            .expect("Failed to read glob pattern")
+            .for_each(|entry: Result<PathBuf, glob::GlobError>| match entry {
                 Ok(path) if path.is_file() => {
                     println!("Removing file {:?}", path);
-                    fs::remove_file(path)?;
+                    fs::remove_file(path).unwrap();
                 }
                 Err(e) => eprintln!("Glob error: {}", e),
                 _ => {}
-            }
-        }
-    }
+            });
+    });
 
-    for directory_name in &DIRECTORIES {
-        delete_dirs_recursively(".", directory_name)?;
-    }
+    DIRECTORIES.iter().for_each(|directory_name: &&str| {
+        delete_dirs_recursively(".", directory_name).unwrap();
+    });
 
     Ok(())
 }
