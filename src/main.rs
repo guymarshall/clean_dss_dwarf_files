@@ -1,6 +1,5 @@
-// TODO: Parallelise
-
 use glob::glob;
+use rayon::prelude::*;
 use std::fs;
 use std::io;
 use std::path::PathBuf;
@@ -41,7 +40,7 @@ fn main() -> io::Result<()> {
 
     const DIRECTORIES: [&str; 1] = ["Thumbnail"];
 
-    FILES.iter().for_each(|pattern: &&str| {
+    FILES.par_iter().for_each(|pattern: &&str| {
         let recursive_pattern: String = format!("**/{}", pattern);
 
         glob(&recursive_pattern)
@@ -56,7 +55,7 @@ fn main() -> io::Result<()> {
             });
     });
 
-    DIRECTORIES.iter().for_each(|directory_name: &&str| {
+    DIRECTORIES.par_iter().for_each(|directory_name: &&str| {
         delete_dirs_recursively(".", directory_name).unwrap();
     });
 
