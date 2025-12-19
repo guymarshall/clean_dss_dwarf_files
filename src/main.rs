@@ -1,5 +1,3 @@
-// TODO: Only log current directory e.g. "M42 - Pleiades"
-// TODO: Count number of directories, then only log "CURRENT/TOTAL"
 // TODO: Parallelise
 
 use glob::glob;
