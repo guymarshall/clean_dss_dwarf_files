@@ -28,7 +28,7 @@ fn delete_dirs_recursively(root: &str, name: &str) -> io::Result<()> {
 }
 
 fn main() -> io::Result<()> {
-    const FILES: [&str; 8] = [
+    const FILES: [&str; 7] = [
         "img_reference.png",
         "img_stacked_all.tif",
         "img_stacked_counter.png",
@@ -36,7 +36,6 @@ fn main() -> io::Result<()> {
         "*stacked*",
         "*.info.txt",
         "*.stackinfo.txt",
-        "failed*",
     ];
 
     const DIRECTORIES: [&str; 1] = ["Thumbnail"];
